@@ -1,0 +1,77 @@
+=========================
+EXPLICATION DE TÂCHE
+=========================
+
+OBJECTIF :
+Identifier automatiquement les entités nommées dans un texte pour la veille sanitaire de défense.
+
+-------------------------
+RÈGLES GÉNÉRALES
+-------------------------
+- Pas de chevauchement d’annotations (sauf pour les entités discontinues).
+- Ne pas annoter les articles/déterminants précédant une entité.
+- Ne pas inclure la ponctuation sauf si elle fait partie du nom.
+- Ne pas annoter les reprises pronominales ou termes vagues (ex : "la maladie", "le virus").
+- Les mots mal orthographiés ne sont pas annotés, sauf translittération fautive.
+
+-------------------------
+ENTITÉS À PRÉDIRE
+-------------------------
+
+[1] AUTEURS & SOURCES
+- DOC_AUTHOR : nom(s) de l’auteur du document.
+- DOC_SOURCE : source institutionnelle ou médiatique (ex : "AFP", "Le Monde").
+
+[2] MALADIES ET PATHOGÈNES
+- INF_DISEASE : maladies infectieuses.
+- NON_INF_DISEASE : maladies non infectieuses.
+- PATHOGEN : agents infectieux (ex : bactéries, virus...).
+- DIS_REF_TO_PATH : maladie utilisée pour désigner un pathogène (ex : "paludisme" → Plasmodium).
+- PATH_REF_TO_DIS : pathogène utilisé pour désigner une maladie (ex : "VIH" comme maladie).
+
+⚠️ POINTS D’ATTENTION :
+- Ne pas annoter les symptômes sauf s’ils désignent une maladie.
+- "infection à X" = tout annoter comme INF_DISEASE.
+- "virus de la Dengue" = PATHOGEN ; "infection par le virus de la Dengue" = INF_DISEASE.
+- "vaccin contre la coqueluche" → ne pas annoter.
+- "tétanos" = INF_DISEASE ; "botulisme" = NON_INF_DISEASE
+
+[3] AGENTS NRBCE ET TOXINES
+- RADIOISOTOPE : éléments radioactifs (ex : uranium, césium-137).
+- TOXIC_C_AGENT : agents chimiques toxiques inorganiques.
+- BIO_TOXIN : toxines organiques (ex : toxine botulique).
+- EXPLOSIVE : substances explosives.
+
+[4] LIEUX ET ORGANISATIONS
+- LOCATION : lieux géographiques (ex : Paris, Asie, lac Léman).
+- ORGANIZATION : institutions, agences, hôpitaux (ex : "OMS", "Université de Paris").
+- LOC_REF_TO_ORG : lieu désignant une autorité (ex : "Paris a décidé..." → mairie).
+- ORG_REF_TO_LOC : organisation utilisée pour désigner un lieu (ex : "centrale nucléaire de Tchernobyl").
+
+⚠️ POINTS D’ATTENTION :
+- Si le lieu agit ou parle → LOC_REF_TO_ORG.
+- Les installations (aéroports, hôpitaux, universités) sont ORGANIZATION sauf si désignent un lieu → ORG_REF_TO_LOC.
+- "Université de Paris" = ORGANIZATION ; "Université à Paris" = ORGANIZATION + LOCATION.
+- Ne pas annoter les gentilés ("français", "marseillais").
+
+[5] DATES ET PÉRIODES
+- ABS_DATE : date complète (ex : "26 février 2023").
+- REL_DATE : date relative (ex : "hier", "jeudi dernier").
+- DOC_DATE : date du document (explicite ou implicite).
+- ABS_PERIOD : période absolue (ex : "mars 2023", "20ème siècle").
+- REL_PERIOD : période relative (ex : "la semaine dernière").
+- FUZZY_PERIOD : période floue (ex : "depuis quelques semaines").
+
+⚠️ POINTS D’ATTENTION :
+- Inclure prépositions : "depuis deux mois", "il y a trois semaines".
+- Les heures et durées ne sont pas annotées.
+- Toujours inclure le jour dans une date complète : "mercredi 1er janvier 2025".
+
+[6] ENTITÉS DISCONTINUES
+Utiliser FIRST et NEXT en plus de l’étiquette principale :
+- FIRST : partie initiale (ex : "virus").
+- NEXT : complément(s) final(aux) (ex : "de la dengue", "du chikungunya").
+
+-------------------------
+LA PHASE D'ANNOTATION
+-------------------------

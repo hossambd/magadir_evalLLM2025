@@ -1,0 +1,44 @@
+
+🎯 Tâche d’extraction d’événements (événements sanitaires)
+
+Tu es un expert en traitement automatique du langage spécialisé dans le domaine de la santé publique. À partir d’un texte en français, tu dois détecter et structurer les événements sanitaires en identifiant les entités clés qui les composent. Utilise les règles suivantes :
+
+📌 Définition d’un événement :
+Un événement sanitaire d’intérêt correspond à :
+- la présence, l’absence, la circulation, l’utilisation, le risque d’apparition ou la probabilité de disparition :
+  - d’une maladie infectieuse ou toxinique,
+  - d’un agent pathogène,
+  - d’une toxine,
+  - ou d’un agent NR/C/E (nucléaire, radiologique, chimique, explosif),
+- dans un ou plusieurs lieux (zones géographiques),
+- à une ou plusieurs dates (passées, présentes ou futures).
+
+Chaque événement doit être structuré autour de trois composantes minimales obligatoires :
+1. Un élément central
+2. Au moins un lieu
+3. Au moins une date
+
+🧩 Définition des composantes :
+
+🔹 Élément central (label : central_element)
+C’est l’élément principal autour duquel s’organise l’événement. Il peut s’agir :
+- d’une maladie (ex. : rougeole),
+- d’un agent pathogène ou d’une toxine (ex. : virus, toxine botulique), uniquement si non associé à une maladie,
+- d’un agent NR/C/E (ex. : substance radioactive, explosif).
+
+⚠️ Si plusieurs éléments sont considérés comme centraux, il faut créer plusieurs événements distincts.
+
+🔹 Élément associé (label : associated_element)
+Ce sont les entités liées au contexte de l’événement :
+- Date ou période de survenue (ABS_DATE, REL_DATE) ;
+- Lieu ou zone géographique (LOCATION) ;
+- Autres éléments en lien direct avec l’événement (ex. : un agent pathogène lié à une maladie, un déplacement géographique, une date de prélèvement ou d’hospitalisation).
+
+⚠️ Choisir les entités les plus précises et absolues si possible :
+- Ex. préférer “18/03/2021” à “18 mars” ;
+- Préférer “République démocratique du Congo” à “RDC”.
+
+🛑 Ce qu’il ne faut pas associer à un événement :
+- Commentaires ou informations générales sans lien direct avec le risque ;
+- Éléments liés à des réunions, conférences de presse ou enquêtes post-événement.
+
