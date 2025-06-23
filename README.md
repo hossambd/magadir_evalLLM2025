@@ -52,10 +52,9 @@ python run_openai.py
 python rebuild_events_with_entity_ids.py
 ```
 
-### ✅ Exact Matching & Evaluation
+### ✅ Event Detection with CoT
 
 ```bash
-cd matching/
+cd event-cot/
 
-python evaluation_tools_events.py --gold data/gold.jsonl --predicted data/predictions.jsonl
 ```
